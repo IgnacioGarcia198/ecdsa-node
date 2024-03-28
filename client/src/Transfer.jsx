@@ -1,9 +1,12 @@
 import { useState } from "react";
 import server from "./server";
+import signMessage from "../../shared/signMessage";
+import { signatureToString } from "../../shared/signatureSerial";
 
-function Transfer({ address, setBalance }) {
+function Transfer({ address, setBalance, privateKey }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
+  const [signature, setSignature] = useState("{}");
 
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
@@ -11,12 +14,15 @@ function Transfer({ address, setBalance }) {
     evt.preventDefault();
 
     try {
+      const signature = await signMessage(sendAmount, privateKey);
+      const signatureString = signatureToString(signature);
+      setSignature(signatureString);
       const {
         data: { balance },
       } = await server.post(`send`, {
-        sender: address,
         amount: parseInt(sendAmount),
-        recipient,
+        recipient: recipient,
+        signature: signatureString,
       });
       setBalance(balance);
     } catch (ex) {
@@ -47,6 +53,9 @@ function Transfer({ address, setBalance }) {
       </label>
 
       <input type="submit" className="button" value="Transfer" />
+      <div>
+            Signature: {signature}
+            </div>
     </form>
   );
 }

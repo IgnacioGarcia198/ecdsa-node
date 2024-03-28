@@ -1,14 +1,16 @@
 ## ECDSA Node
 
 This project is an example of using a client and server to facilitate transfers between different addresses. Since there is just a single server on the back-end handling transfers, this is clearly very centralized. We won't worry about distributed consensus for this project.
+Elliptic Curve Digital Signatures are used to ensure a message comes from the expected sender.
 
 However, something that we would like to incoporate is Public Key Cryptography. By using Elliptic Curve Digital Signatures we can make it so the server only allows transfers that have been signed for by the person who owns the associated address.
 
-### Video instructions
-For an overview of this project as well as getting started instructions, check out the following video:
+### Shared code
+The shared folder contains blockchain-related logic.
 
-https://www.loom.com/share/0d3c74890b8e44a5918c4cacb3f646c4
- 
+1. Open a terminal within the `/shared` folder
+2. Run `npm install` to install all the depedencies
+
 ### Client
 
 The client folder contains a [react app](https://reactjs.org/) using [vite](https://vitejs.dev/). To get started, follow these steps:
@@ -24,7 +26,7 @@ The server folder contains a node.js server using [express](https://expressjs.co
 
 1. Open a terminal within the `/server` folder 
 2. Run `npm install` to install all the depedencies 
-3. Run `node index` to start the server 
+3. Run `node index` to start the server
 
 The application should connect to the default server port (3042) automatically! 
 
